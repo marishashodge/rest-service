@@ -42,15 +42,12 @@ public class SnippetController {
     @ResponseBody
     public ResponseEntity<Snippet> snippet(@PathVariable String name) {
         LocalDateTime currentDateTime = LocalDateTime.now();
-        Snippet snippet = null;
+        Snippet snippet = snippets.getOrDefault(name, null);
 
-        if (snippets.containsKey(name)) {
-            snippet = snippets.get(name);
-            if (snippet.getExpires_at().isBefore(currentDateTime)) {
-                snippet.setExpires_at(LocalDateTime.now().plusSeconds(30));
-            }
+        if (snippet != null && snippet.getExpires_at().isAfter(currentDateTime)) {
+            snippets.get(name).setExpires_at(LocalDateTime.now().plusSeconds(30));
         } else {
-            return new ResponseEntity<Snippet>(snippet, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Snippet>(HttpStatus.NOT_FOUND);
         }
 
         ResponseEntity<Snippet> response = new ResponseEntity<>(snippet, HttpStatus.OK);
