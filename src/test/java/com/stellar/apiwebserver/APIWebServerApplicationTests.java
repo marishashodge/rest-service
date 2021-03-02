@@ -1,10 +1,10 @@
-package com.stellar.restservice;
+package com.stellar.apiwebserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RestServiceApplicationTests {
+class APIWebServerApplicationTests {
 
 	@Test
 	void contextLoads() {
